@@ -1,0 +1,115 @@
+@font-face{
+
+	font-family: 'mono';
+	src: url('./fonts/diatype_mono.ttf');
+}
+
+*{
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none; 
+	transition: 500ms all;
+}
+
+:root {
+	--bg: #F7F3EE;
+  --pr: #000000;
+  --hi: #F1DDF1;
+  --hig: #E2E9C1;
+  --mut: #a0a0a07d;
+}
+body {
+	font-family: 'OPS Favorite';
+	font-family: 'Gap Sans';
+	background: var(--bg);
+}
+
+h1 {
+	font-size: 5em;
+	background: var(--hi);
+}
+
+h2 {
+	font-size: 4em;
+	background: var(--hig);
+}
+
+h3 {
+	font-size: 3em;
+	background: var(--hi);
+}
+
+p {
+	font-size: 3em;
+}
+
+.box > * {
+	max-width: 90%;
+	max-height: 90%;
+}
+
+.box {
+	position: fixed;
+	border: 4px solid var(--hig);
+	background: var(--bg);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* box-shadow: 0 0 13px 5px rgba(0,0,0,.1); */
+}
+
+#coding-caption {
+	width: 40vw;
+	height: 20vh;
+	top: 2vh;
+	left: 2vw;
+}
+
+#coding-display {
+	width: 50vw;
+	height: 70vh;
+	top: 20.5vh;
+	left: 5vw;
+}
+
+#design-display {
+	width: 50vw;
+	top: 2vh;
+	height: 80vh;
+	right: 3vw;
+}
+
+
+#design-caption {
+	width: 40vw;
+	height: 20vh;
+	bottom: 3.5vh;
+	right: 2vw;
+}
+
+
+.controller {
+	width: 20vw;
+	height: 8vh;
+	bottom: 1vh;
+	left: 1vw;
+	/* display: grid; */
+	/* grid-template-columns: 1fr 1fr; */
+	/* padding: 1em; */
+	font-size: 1em;
+	text-transform: uppercase;
+	font-weight: 600;
+	/* font-family: monospace; */
+}
+
+
+button {
+	all: unset;
+	/* border: 2px solid black; */
+	padding: 1em;
+	user-select: none;
+}
+button:hover {
+	background: black;
+	color: white;
+}
+
