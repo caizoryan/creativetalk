@@ -124,54 +124,143 @@ let prevslide = () => {
 	// doo(slides[slidenumber.value()])
 }
 
-let doo = (cmds) => cmds.forEach(e => e())
-
+let doo = (cmds) => cmds.forEach(e => e()) 
 let btn = (t, fn) => dom(['button', t, { onclick: fn }])
-let toggle = 0
 let buttons = dom([
 	'.controller.box',
-	// btn('undo', () => history.undo()),
-	// btn('redo', () => history.redo()),
-	// btn('toggle', () => { toggle % 2 == 0 ? focus_design() : focus_coding(); toggle++ }),
 	btn('next', nextslide),
 	btn(slidenumber, () => console.log(slidenumber.value())  ),
 	btn('prev', prevslide),
-	btn('normal', normal_layout)
 ])
 
 let root = [".root", codingcaption, codingdispaly, designdispaly, designcaption, buttons]
 
-let cmd = {
-	focus_coding,
-	focus_design,
-	normal_layout,
 
-	d: {
-		cc: (el) => () => ccdisplay.next(el),
-		cd: (el) => () => cddisplay.next(el),
-		dd: (el) => () => dddisplay.next(el),
-		dc: (el) => () => dcdisplay.next(el),
+let display= {
+	cc: (el) => () => ccdisplay.next(el),
+	cd: (el) => () => cddisplay.next(el),
+	dd: (el) => () => dddisplay.next(el),
+	dc: (el) => () => dcdisplay.next(el),
+	clear : () => {
+		display.cd(empty)()
+		display.dd(empty)()
+		display.cc(empty)()
+		display.dc(empty)()
 	}
 }
 
 let empty = ['div']
+let h1 = t => ['h1', t]
+let h2 = t => ['h2', t]
+let h3 = t => ['h3', t]
+let h4 = t => ['h4', t]
+let video = t => ['video', {src: t, muted: true, autoplay: true, loop: true }]
+let img = t => ['img', {src: t}]
 
 let slides = [
 	[],
 
-	[cmd.d.dd(['h2', "I'm a graphic design student" ])],
-	[cmd.d.cd(['h1', "I also code" ])],
+	[display.dd(h2("I'm a graphic design student"))],
+	[display.cd(h1("I also code" ))],
 	[
 		// add gifs of the tool
-		cmd.d.cd(empty),
-		cmd.d.dd(empty),
+		display.cd(empty),
+		display.dd(empty),
 
-		cmd.d.cc(['h1', 'Publication Tool']),
-		cmd.d.dc(['h1', 'Publication Tool'])
+		display.cc(h1('Publication Tool')),
+		display.dc(h1('Publication Tool'))
 	],
 
+	// [
+	// 	focus_design,
+	// 	display.dd(h2("I was seeking an alternative to Adobe (boooo)")),
+	// ],
+	// [
+	// 	focus_coding,
+	// 	display.cd(h2("What would it take to bootleg something like InDesign")),
+	// ],
+	// [normal_layout]
 
+	[display.clear],
+	[focus_design, display.dc(h2('Presentation Focus on'))],
 
+	[display.dd(h3('What the tool does'))],
+	[display.dd(h3(['s', 'What the tool does']))],
+	[display.dd(['div', 
+		 h3(['s', 'What the tool does']),
+		 h2("Process")])],
+
+	[normal_layout],
+	[display.cd(h2('+ Language & Syntax'))],
+
+	[display.clear],
+	[display.dd(h3("But I'm still going to show you the tool :)"))],
+
+	[focus_coding, display.clear],
+
+	// First box
+	[display.cc(h3("Comes in many shapes and forms"))],
+
+	[display.cc(h3("Is a wrapper over p5.js"))],
+
+	[focus_design, display.dc(h4("p5.js + typographic vocabulary"))],
+
+	[
+		focus_coding,
+		display.cc(h3("p5.js wrapper -- for books" )),
+		display.dc(h2("Type")),
+	],
+	[
+		display.cc(h3("And the data structure lives as nested Arrays")),
+		display.cd(img('./images/nested_array.png'))
+	],
+
+	[
+		display.cc(h3("You can put words on page")),
+		display.cd(video('./images/words_on_page.mp4'))
+	],
+	[
+		display.cc(h3("and more words")),
+		display.cd(video('./images/more_words_on_page.mp4'))
+	],
+	[
+		display.cc(h3("you can put images")),
+		display.cd(video('./images/images_on_page.mp4'))
+	],
+	[
+		display.cc(h3("shapes")),
+		display.cd(video('./images/shapes.mp4'))
+	],
+	[
+		display.cc(h3("and more shapes")),
+		display.cd(video('./images/more_shapes.mp4'))
+	],
+
+	[
+		display.cc(h3("and moreeeeee")),
+		display.cd(video('./images/more_more_shapes.mp4'))
+	],
+	[
+		display.cc(h3("change sheet sizes"))
+	],
+	[
+		display.cc(h3("and sheet colors"))
+	],
+	[display.cc(h3("offset the sheets--"))],
+	[display.cc(h3("vertically"))],
+	[display.cc(h3("or horizontally"))],
+	[display.cc(h3("see how this would look"))],
+	[display.cc(h3("and with multiples"))],
+	[display.cc(h3("and export as imposed print files"))],
+	[
+		focus_design,
+		display.dc(h2("which can then be printed"))
+	],
+
+	[
+		focus_design,
+		display.dc(h2("and bound"))
+	],
 ]
 
 document.onkeydown = e => {
@@ -179,6 +268,14 @@ document.onkeydown = e => {
 	if (e.key == 'ArrowRight') nextslide()
 }
 
+let gotoslide = e => {
+	if (e > slidenumber.value()) {
+		for (let i = 0; i<e; i++) {
+			setTimeout(() => nextslide(), 100*i)
+		}
+	}
+}
 
 document.body.appendChild(dom(root))
-console.log('hello world')
+
+gotoslide(17)
