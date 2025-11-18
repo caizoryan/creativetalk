@@ -109,7 +109,25 @@ let codingdispaly = dom(['.box#coding-display', { style: widthify(cdwidth) }, cd
 let designcaption = dom(['.box#design-caption', { style: widthify(dcwidth) }, dcdisplay])
 let designdispaly = dom(['.box#design-display', { style: widthify(ddwidth) }, dddisplay])
 
+
+let interval
+
 let slidenumber = reactive(-1)
+let seconds = reactive(0)
+slidenumber.subscribe(e => {
+	if (slidenumber.value() == 0){
+		if (interval) clearInterval()
+		seconds.next(0)
+		interval=setInterval(() => {seconds.next(e => e+.5)}, 500)
+	}
+})
+let time = memo(()=> {
+	const minutes = Math.floor(seconds.value() / 60);
+	const second = seconds.value() - minutes * 60;
+
+	return minutes + ':' + second
+
+}, [seconds])
 let minusc = e => e == 0 ? e : e-1
 let nextslide = () => {
 	let old = slidenumber.value()
@@ -117,7 +135,6 @@ let nextslide = () => {
 
 	if (old != slidenumber.value()) doo(slides[slidenumber.value()])
 }
-
 let prevslide = () => {
 	slidenumber.next(minusc)
 	history.undo()
@@ -131,6 +148,7 @@ let buttons = dom([
 	btn('next', nextslide),
 	btn(slidenumber, () => console.log(slidenumber.value())  ),
 	btn('prev', prevslide),
+	btn(time, () => {})
 ])
 
 let root = [".root", codingcaption, codingdispaly, designdispaly, designcaption, buttons]
@@ -157,9 +175,7 @@ let h4 = t => ['h4', t]
 let video = t => ['video', {src: t, muted: true, autoplay: true, loop: true }]
 let img = t => ['img', {src: t}]
 
-let slides = [
-	[],
-
+let intro = [
 	[display.dd(h2("I'm a graphic design student"))],
 	[display.cd(h1("I also code" ))],
 	[
@@ -192,7 +208,14 @@ let slides = [
 
 	[normal_layout],
 	[display.cd(h2('+ Language & Syntax'))],
+]
 
+let glossary = ['div']
+
+let slides = [
+	[],
+
+	...intro,
 	[display.clear],
 	[display.dd(h3("But I'm still going to show you the tool :)"))],
 
@@ -261,7 +284,103 @@ let slides = [
 		focus_design,
 		display.dc(h2("and bound"))
 	],
+
+	[normal_layout, display.clear],
+
+	[display.cc(h2("Let's break this down"))],
+	[display.dc(h2("Words")),],
+	...['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',]
+		.reduce((acc, item) => {
+			acc.total.push(item)
+			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
+			console.log(acc)
+			return acc
+		}, {
+			total: [],
+			slides:[],
+		}).slides,
+
+	[display.dc(h2("Constitute a book"))],
+
+	[focus_coding],
+	[display.cc(h2("Syntax")),
+		display.cd(img('./images/words.png'))],
+	[display.cc(h2("Map Relationships"))],
+
+	[display.clear],
+	[display.cc(h2("So what goes into making this tool?"))],
+	[display.cd(['p', "The first thing that comes to mind when you think of a software that can make books, is...."])],
+
+	[display.cd(h2("WORDS!"))],
+	[
+		display.cc(h2("Typesetting")),
+		display.cd(h2("so we start with displaying words"))
+	],
+
+	[display.cd(h2("xxx Explains with images xxx"))],
+
+	[
+		display.clear,
+		display.cc(h2("So what's next?"))],
+
+	[
+		display.cd(h2("I have this white box that can draw words"))
+	],
+
+	[display.cd(h3("But it's not a sheet of paper yet?"))],
+	[
+		display.cc(h2("Units")),
+		display.cd(h3("units so the canvas can correspond to the printed page"))
+	],
+
+	[
+		display.cc(h2("Grid + (recto & verso)")),
+		display.cd(h3("Differentiate right and left page"))
+	],
+
+	[
+		display.cd(h3("Left and right page together make a spread")),
+		(
+			glossary.push(
+				["p", "spread: the surface made up of two pages in an open book."]),
+			display.dd(glossary)
+		)
+	],
+
+	[
+		display.cd(h3("left is verso, right is recto"))
+		(
+			glossary.push(["p", "recto: right page."]),
+			glossary.push(["p", "verso: left page."]),
+			display.dd(glossary)
+		)
+	],
+	[display.cd(h3("Just like introducing units turned canvas into a page"))],
+	[display.cd(h3("Introducing grid in our vocabulary makes this surface legible as a spread"))],
+
+	[display.cc(h2("Sequences"))],
+	[display.cd(h3("We've been just working with single spreads"))],
+	[display.cd(h3("But a book has multiple pages"))],
+
+	[display.cd(h3("new Book([spreads])"))],
+	[display.cd(h3("Book.page = 2"))],
+	[display.cd(h3("Book.draw()"))],
+
+	[display.cc(h2("Imposition"))],
+	[display.cd(h4("If you take a close look at a book, you'll see that the spreads aren't really on the same sheet. They get split up into different sheets"))],
+	[display.cd(h4("Explains imposition with diagrams, images and videos"))],
+
+	[focus_design],
+	[display.dc(h4("How book gets bound"))],
+	[display.dd(h4("Explains imposition with diagrams, images and videos"))],
+
+	[focus_coding],
+	[display.cc(h2("Affordances"))],
+	[display.cd(h2("So at this point I started thinking how can I utilize the affordances that come with "))],
+	
+
 ]
+
 
 document.onkeydown = e => {
 	if (e.key == 'ArrowLeft') prevslide()
@@ -271,11 +390,11 @@ document.onkeydown = e => {
 let gotoslide = e => {
 	if (e > slidenumber.value()) {
 		for (let i = 0; i<e; i++) {
-			setTimeout(() => nextslide(), 100*i)
+			setTimeout(() => nextslide(), 50*i)
 		}
 	}
 }
 
 document.body.appendChild(dom(root))
 
-gotoslide(17)
+gotoslide(66)

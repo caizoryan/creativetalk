@@ -54,7 +54,8 @@ p {
 .box {
 	overflow: hidden;
 	position: fixed;
-	border: 4px solid var(--hig);
+	border: 1px solid var(--mut);
+
 	background: var(--bg);
 	display: flex;
 	justify-content: center;
@@ -81,6 +82,9 @@ p {
 	top: 2vh;
 	height: 80vh;
 	right: 3vw;
+
+	/* border-left: 4px solid var(--hig); */
+	/* border-right: 3px solid var(--hig); */
 }
 
 
@@ -89,6 +93,9 @@ p {
 	height: 20vh;
 	bottom: 3.5vh;
 	right: 2vw;
+
+	/* border-left: 4px solid var(--hig); */
+	/* border-right: 3px solid var(--hig); */
 }
 
 
