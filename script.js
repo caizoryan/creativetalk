@@ -244,7 +244,6 @@ let demo = [
 // So before I dive into the process and the parts of the tool, let me give you a quick demo. 
 	[display.cd(flash("THE TOOL"))],
 	[display.cc(h1("THE TOOL"))],
-	[display.cd(h1("*Clips of the tool*"))],
 
 	...build(['0', '01','1', '2', '3', '4',],
 					 (total) => [
@@ -282,6 +281,8 @@ let process = [
 	 // TODO: add indesign video display.cd(video("First intentions"))
 	],
 
+	[display.cd(imgf('indesign'))],		
+
 	[display.clear, focus_design],
 	[display.dc(h1("words..."))],
 
@@ -311,7 +312,7 @@ let text = [
 	[display.cc(h4("Whats the first thing we need?"))],
 	[display.cc(h1("text"))],
 	[display.cd(imgf("text"))],
-	[display.cd(h4("*Show canvas*"))],
+	[display.cd(imgf("first_text"))],
 	[display.dc(h2("EASY"))],
 ]
 let units = [
@@ -344,17 +345,19 @@ let units = [
 
 	[display.cc(h4("And then I can"))],
 	[display.cd(imgf("text_units"))],
-	[display.cd(h4("*Show canvas*"))],
 
 	[display.cc(h4("And create a sheet"))],
 	[display.cd(imgf("letter_page"))],
+
+	[display.cd(imgf("text_on_page"))],
+
 
 	[display.cc(h4("And see this text on the sheet"))],
 
 	[normal_layout, display.cc(empty)],
 	[
-		display.cd(h4("*Show canvas*")),
-		display.dd(h4("*Show page*")),
+		display.cd(imgf("text_on_page")),
+		display.dd(imgf("text_on_printed")),
 		display.dc(h4("PRINT"))
 	],
 	[display.dc(h3("Units give this p5 canvas the validity of a letter size sheet"))],
@@ -402,7 +405,7 @@ let grid = [
 	[display.cc(h4('Validate canvas as a Spread'))],
 
 	[display.cd(h1('GRID'))],
-	[display.cd(h1('*Show Grid images*'))],
+	[display.cd(videof('grids'))],
 	[display.cd(
 		imgf('simple_grid')
 	)],
@@ -424,7 +427,7 @@ let sequencing = [
 	[display.cc(h4("So up until now we've been doing a single spread"))],
 	[
 		display.cc(h4("But a book has multiple")),
-		display.cd(h4("*Flupping througbn book")),
+		display.cd(videof("multiple_spreads")),
 	],
 
 	[display.cc(h4("Store a spread as data")),],
@@ -511,10 +514,28 @@ let conclusions = [
 	[display.cc(h3('and to print it out'))],
 	[display.dc(h3('and make a book'))],
 
+	[display.clear],
 	[display.cd(flash('CLosing thoughts'))],
 	[display.cc(h1('Play around with'))],
 	[display.dc(h1('Term definitions'))],
-	// [display.cc(imgf(''))],		
+	[
+		display.cc(h2('Nested Books')),
+		display.cd(videof('multi_book'))
+	],
+	[
+		display.cc(h2('Continous Page Numbers')),
+		display.cd(videof('page_numbers'))
+	],
+
+	[
+		display.cc(h2('New words: Offsets')),
+		display.cd(videof('offsets'))
+	],
+
+	[display.clear],
+	[display.cd(flash('OK THATS IT'))],
+	[display.dd(flash('THANKS'))],
+	// [display.cc(imgf('indesign'))],		
 ]
 
 let slides = [
@@ -563,6 +584,6 @@ let gotoslide = e => {
 
 document.body.appendChild(dom(root))
 
-// gotoslide(140)
+gotoslide(64)
 
 
