@@ -584,6 +584,6 @@ let gotoslide = e => {
 
 document.body.appendChild(dom(root))
 
-gotoslide(64)
+// gotoslide(64)
 
 
