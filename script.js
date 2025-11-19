@@ -230,14 +230,6 @@ let intro = [
 		])],
 ]
 
-let demo = [
-	[display.clear, focus_coding],
-// So before I dive into the process and the parts of the tool, let me give you a quick demo. 
-	[display.cd(flash("THE TOOL"))],
-	[display.cc(h1("THE TOOL"))],
-	[display.cd(h1("*Clips of the tool*"))],
-]
-
 let build = (items, fn /*(total)*/) => items.reduce((acc, item) => {
 			acc.total.push(item)
 			acc.slides.push(fn(acc.total))
@@ -246,6 +238,25 @@ let build = (items, fn /*(total)*/) => items.reduce((acc, item) => {
 			total: [],
 			slides:[],
 		}).slides
+
+let demo = [
+	[display.clear, focus_coding],
+// So before I dive into the process and the parts of the tool, let me give you a quick demo. 
+	[display.cd(flash("THE TOOL"))],
+	[display.cc(h1("THE TOOL"))],
+	[display.cd(h1("*Clips of the tool*"))],
+
+	...build(['0', '01','1', '2', '3', '4',],
+					 (total) => [
+						 display.cd(videof('tool/' + total[total.length-1])),
+					 ]),
+
+	...build(['1', '2', '3', '4', '5', '6', '7', '8'],
+					 (total) => [
+						 display.cd(imgf('tool/out' + total[total.length-1])),
+					 ])
+]
+
 
 let process = [
 	[display.clear],
