@@ -271,8 +271,55 @@ let introthesecond = [
 	 // TODO: add indesign video display.cd(video("First intentions"))
 	],
 
+	[display.clear, focus_design],
+	[display.dc(h1("words..."))],
 
+	...['Page', 'Spread', 'Recto', 'Verso', 'Grid', 'Signature', 'Sheets']
+		.reduce((acc, item) => {
+			acc.total.push(item)
+			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
+			return acc
+		}, {
+			total: [],
+			slides:[],
+		}).slides,
+
+	[display.dc(h4("bits and pieces that"))],
+	[display.dc(h2("constitute a BOOK"))],
+
+	[focus_coding],
+	[display.cc(h1("OK"))],
+	[display.cc(h1("Syntax"))],
+	[display.cd(
+		h1("Afforded to me by javascript")
+		// add image of function, classes, objects, arrays, loops
+	)],
+
+	[display.cd(
+		['div',
+			h4("Afforded to me by javascript"),
+			h4("and p5.js")
+			// text(), line(), createCanvas() 
+		]
+	)],
+
+	[display.cd(
+		['div',
+			h4("Break down this vocabulary"),
+		]
+	)],
+
+	[display.cd(
+		['div',
+			h4("Break down this vocabulary"),
+			h4("|"),
+			h4("|"),
+			h4("v"),
+			h4("how to constitute in a programming context"),
+		]
+	)],
 ]
+
 
 
 let slides = [
@@ -306,6 +353,33 @@ let slides = [
 document.onkeydown = e => {
 	if (e.key == 'ArrowLeft') prevslide()
 	if (e.key == 'ArrowRight') nextslide()
+	if (e.key == 'l') {
+		if (e.repeat) { return }
+		document.body.appendChild(dom('.big.right-arrow', '☞'))
+	}
+
+	if (e.key == 'k' ){
+
+		if (e.repeat) { return }
+		document.body.appendChild(dom('.big.center-arrow', '⬄'))
+	}
+		if(e.key == 'j') {
+		if (e.repeat) { return }
+		document.body.appendChild(dom('.big.center-arrow', '⇔'))
+		//⬄
+	}
+
+	if (e.key == 'h') {
+		if (e.repeat) { return }
+		document.body.appendChild(dom('.big.left-arrow', '☜'))
+	}
+}
+
+document.onkeyup = e => {
+	if (e.key == 'l') {document.querySelectorAll('.right-arrow').forEach(e => e.remove())}
+	if (e.key == 'k' || e.key == 'j')
+	{document.querySelectorAll('.center-arrow').forEach(e => e.remove())}
+	if (e.key == 'h') {document.querySelectorAll('.left-arrow').forEach(e => e.remove())}
 }
 
 let gotoslide = e => {
@@ -318,4 +392,4 @@ let gotoslide = e => {
 
 document.body.appendChild(dom(root))
 
-gotoslide(38)
+gotoslide(57)

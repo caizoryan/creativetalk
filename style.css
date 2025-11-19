@@ -22,6 +22,16 @@
 	font-family: 'hermit';
 }
 
+.big {
+	font-size: 40vw;
+	position: fixed;
+	left: 25vw;
+	top: 0vh;
+	color: blue;
+	mix-blend-mode: color-burn;
+
+}
+
 body {
 	font-family: 'OPS Favorite';
 	font-family: 'Gap Sans';
