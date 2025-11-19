@@ -32,6 +32,13 @@
 
 }
 
+.flash{
+	font-size: 5.5em;
+	background: red;
+	color: white;
+	font-family: 'OPS Favorite';
+}
+
 body {
 	font-family: 'OPS Favorite';
 	font-family: 'Gap Sans';

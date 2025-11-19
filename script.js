@@ -116,7 +116,7 @@ let slidenumber = reactive(-1)
 let seconds = reactive(0)
 slidenumber.subscribe(e => {
 	if (slidenumber.value() == 0){
-		if (interval) clearInterval()
+		if (interval) clearInterval(interval)
 		seconds.next(0)
 		interval=setInterval(() => {seconds.next(e => e+.5)}, 500)
 	}
@@ -169,14 +169,19 @@ let display= {
 
 let empty = ['div']
 let h1 = t => ['h1', t]
+let flash = t => ['h1.flash', t]
 let h2 = t => ['h2', t]
 let h3 = t => ['h3', t]
 let h4 = t => ['h4', t]
 let video = t => ['video', {src: t, muted: true, autoplay: true, loop: true }]
 let img = t => ['img', {src: t}]
+let imgf = t => ['img', {src:"./images/" +t+".png"}]
+let giff = t => ['img', {src:"./images/" +t+".gif"}]
 let light = t => ['span.light', t]
 
 let intro = [
+	[display.cd(flash("HELLO WORLD"))],
+	[display.cd(flash("aaryan"))],
 	[display.dd(h2("I'm a graphic design student"))],
 	[display.cd(h1("And I also code" ))],
 	[
@@ -199,10 +204,8 @@ let intro = [
 	[focus_design, display.dc(h2('The tool...'))],
 
 	[display.dd(['div', ['p',"isn't really a ", ['s', 'concrete'], " thing" ]])],
-	[display.dd(['div', ['p',"isn't really a ", ['s', 'concrete'], " thing" ]])],
 	[focus_coding],
 	[display.cd(['div', ['p', "but rather several mutations of the same codebase"]])],
-
 
 	[normal_layout, display.clear],
 
@@ -227,7 +230,8 @@ let intro = [
 let demo = [
 	[display.clear, focus_coding],
 // So before I dive into the process and the parts of the tool, let me give you a quick demo. 
-	[display.cc(h1("SHOW THE TOOL"))],
+	[display.cd(flash("THE TOOL"))],
+	[display.cc(h1("THE TOOL"))],
 	[display.cd(h1("*Clips of the tool*"))],
 ]
 
@@ -241,7 +245,9 @@ let build = (items, fn /*(total)*/) => items.reduce((acc, item) => {
 		}).slides
 
 let introthesecond = [
-
+	[display.clear],
+	[display.cd(flash('Bits and Pieces'))],
+	[normal_layout],
 	[display.cd(h1("A shared"))],
 	[display.dd(h1("Vocabulary"))],
 	[display.cd(h2("Typographic")), display.dd(h2("Vocabulary"))],
@@ -276,13 +282,6 @@ let introthesecond = [
 	[display.cc(h1("Syntax"))],
 
 	...build([
-			h4("Afforded to me by javascript"),
-			h4(light('functions, objects, arrays and loops')),
-			h4("and p5.js"),
-			h4(['span.mono.light', 'text(), line(), rect(), textSize(), ...'])],
-					 total => [display.cd(['div', ...total])]),
-
-	...build([
 			h4("Break down this vocabulary"),
 			h4("|"),
 			h4("|"),
@@ -291,66 +290,135 @@ let introthesecond = [
 					 total => [display.cd(['div', ...total])]),
 ]
 
+let text = [
+	[display.clear],
+	[display.cc(h4("Whats the first thing we need?"))],
+	[display.cc(h1("text"))],
+	[display.cd(imgf("text"))],
+	[display.cd(h4("*Show canvas*"))],
+	[display.dc(h2("EASY"))],
+]
+let units = [
+	[display.dc(h4("...wait a min"))],
+	[
+		display.cd(imgf("text_pixels")),
+		display.dc(h4("these are pixels")),
+	],
+	[
+		focus_design,
+		display.dc(h4("but I want units of a physical page"))
+	],
+	...build([
+		h2("Ems"),
+		h2("Picas"),
+		h2("Inches"),
+		h2("Points"),
+	], total => [display.dd(['div', ...total])]),
 
+	[focus_coding],
+	[
+	 display.cc(h4("so back to the drawing board")),
+	 display.dc(h4("Physical Units"))
+	],
+
+	[
+		display.cc(h4("cook up some units")),
+		display.cd(imgf('units'))
+	],
+
+	[display.cc(h4("And then I can"))],
+	[display.cd(imgf("text_units"))],
+	[display.cd(h4("*Show canvas*"))],
+
+	[display.cc(h4("And create a sheet"))],
+	[display.cd(imgf("letter_page"))],
+
+	[display.cc(h4("And see this text on the sheet"))],
+
+	[normal_layout, display.cc(empty)],
+	[
+		display.cd(h4("*Show canvas*")),
+		display.dd(h4("*Show page*")),
+		display.dc(h4("PRINT"))
+	],
+	[display.dc(h3("Units give this p5 canvas the validity of a letter size sheet"))],
+
+
+	[display.dc(h3("So we have a sheet!"))],
+	[display.dc(h3("But we're making books...")),
+		display.cd(empty),
+		display.dd(empty)
+	],
+
+	[display.dc(h3("So we dont really want a 'sheet'"))],
+	[display.dc(h3("we want a..."))],
+	[display.dc(h3("SPREAD")), focus_design],
+	[display.dc(h3("What's a SPREAD?")),],
+	[
+		display.dc(h3("When we look at an open book")),
+		display.dd(giff('open_book')),
+	],
+
+	[
+		display.dc(h3("We're looking at two separate pages")),
+		display.dd(giff('two_pages')),
+	],
+
+	[
+		display.dc(h3("SPREAD -> The surface they make up together")),
+		display.dd(giff('spread')),
+	],
+
+	[
+		display.dc(h3("recto -> right page, verso the other one")),
+		display.dd(giff('recto_verso')),
+	],
+
+	[focus_coding],
+
+	[display.cc(h3("I need to be able to access, verso and recto"))],
+]
+
+let parts = [
+	[focus_coding, display.clear],
+	[display.cd(flash('THE PARTS'))],
+	...text,
+	...units,
+]
 
 let slides = [
 	[],
-
 	...intro,
 	...demo,
 	...introthesecond,
-
-	[display.clear],
-	[focus_coding, display.clear],
-
-	// First box
-	[display.cc(h2("Let's break this down"))],
-	[display.dc(h2("Words"))],
-	...['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',]
-		.reduce((acc, item) => {
-			acc.total.push(item)
-			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
-			console.log(acc)
-			return acc
-		}, {
-			total: [],
-			slides:[],
-		}).slides,
-
-	[display.dc(h2("Constitute a book"))],
+	...parts,
 ]
 
 
 document.onkeydown = e => {
 	if (e.key == 'ArrowLeft') prevslide()
 	if (e.key == 'ArrowRight') nextslide()
-	if (e.key == 'l') {
+	if (e.key == 'd') {
 		if (e.repeat) { return }
 		document.body.appendChild(dom('.big.right-arrow', '☞'))
 	}
 
-	if (e.key == 'k' ){
-
+	if(e.key == 's') {
 		if (e.repeat) { return }
-		document.body.appendChild(dom('.big.center-arrow', '⬄'))
-	}
-		if(e.key == 'j') {
-		if (e.repeat) { return }
-		document.body.appendChild(dom('.big.center-arrow', '⇔'))
-		//⬄
+		document.body.appendChild(dom('.big.center-arrow', '⟷'))
 	}
 
-	if (e.key == 'h') {
+	if (e.key == 'a') {
 		if (e.repeat) { return }
 		document.body.appendChild(dom('.big.left-arrow', '☜'))
 	}
 }
 
 document.onkeyup = e => {
-	if (e.key == 'l') {document.querySelectorAll('.right-arrow').forEach(e => e.remove())}
-	if (e.key == 'k' || e.key == 'j')
+	if (e.key == 'd') {document.querySelectorAll('.right-arrow').forEach(e => e.remove())}
+	if (e.key == 's' )
 	{document.querySelectorAll('.center-arrow').forEach(e => e.remove())}
-	if (e.key == 'h') {document.querySelectorAll('.left-arrow').forEach(e => e.remove())}
+	if (e.key == 'a') {document.querySelectorAll('.left-arrow').forEach(e => e.remove())}
 }
 
 let gotoslide = e => {
@@ -363,6 +431,6 @@ let gotoslide = e => {
 
 document.body.appendChild(dom(root))
 
-gotoslide(57)
+// gotoslide(94)
 
 
