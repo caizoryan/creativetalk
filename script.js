@@ -174,10 +174,11 @@ let h3 = t => ['h3', t]
 let h4 = t => ['h4', t]
 let video = t => ['video', {src: t, muted: true, autoplay: true, loop: true }]
 let img = t => ['img', {src: t}]
+let light = t => ['span.light', t]
 
 let intro = [
 	[display.dd(h2("I'm a graphic design student"))],
-	[display.cd(h1("I also code" ))],
+	[display.cd(h1("And I also code" ))],
 	[
 		// add gifs of the tool
 		display.cd(empty),
@@ -187,108 +188,106 @@ let intro = [
 		display.dc(h1('Publication Tool'))
 	],
 
-	// [
-	// 	focus_design,
-	// 	display.dd(h2("I was seeking an alternative to Adobe (boooo)")),
-	// ],
-	// [
-	// 	focus_coding,
-	// 	display.cd(h2("What would it take to bootleg something like InDesign")),
-	// ],
-	// [normal_layout]
+	[display.dd(h1("PARTS"))],
+	[display.dd(
+		['div', 
+		h1("PARTS &"),
+		h1("PROCESS")]
+	)],
 
 	[display.clear],
-	[focus_design, display.dc(h2('Presentation Focus on'))],
+	[focus_design, display.dc(h2('The tool...'))],
 
-	[display.dd(h3('What the tool does'))],
-	[display.dd(h3(['s', 'What the tool does']))],
-	[display.dd(['div', 
-		 h3(['s', 'What the tool does']),
-		 h2("Process")])],
+	[display.dd(['div', ['p',"isn't really a ", ['s', 'concrete'], " thing" ]])],
+	[display.dd(['div', ['p',"isn't really a ", ['s', 'concrete'], " thing" ]])],
+	[focus_coding],
+	[display.cd(['div', ['p', "but rather several mutations of the same codebase"]])],
 
-	[normal_layout],
-	[display.cd(h2('+ Language & Syntax'))],
+
+	[normal_layout, display.clear],
+
+	[display.cc(h4("The thing that"))],
+	[display.dc(h4("Binds them all together is"))],
+	[display.cd(h1("A shared"))],
+	[display.dd(h1("Vocabulary"))],
+
+	[display.clear],
+	[display.dd(h1("Which is a Typographic Vocabulary"))],
+	[display.cd(h1("Written down as code"))],
+	[display.dd(
+		['div', 
+		 h1("Which is a Typographic Vocabulary"),
+		 ['p',"*Typography is to do with the technique of arranging type",
+			light(" (letters, words, sentences and symbols) ") ,"in order to",
+			light(" (usually but not limited) "),
+			"to shape page layouts and design books"]
+		])],
 ]
 
-let glossary = ['div']
+let demo = [
+	[display.clear, focus_coding],
+// So before I dive into the process and the parts of the tool, let me give you a quick demo. 
+	[display.cc(h1("SHOW THE TOOL"))],
+	[display.cd(h1("*Clips of the tool*"))],
+]
+
+let introthesecond = [
+
+	[display.cd(h1("A shared"))],
+	[display.dd(h1("Vocabulary"))],
+	[display.cd(h2("Typographic")), display.dd(h2("Vocabulary"))],
+
+	[display.clear, focus_coding],
+	[display.dc(h2("Words"))],
+	...['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',]
+		.reduce((acc, item) => {
+			acc.total.push(item)
+			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
+			return acc
+		}, {
+			total: [],
+			slides:[],
+		}).slides,
+
+
+	[display.cc(h2("Programming as -> {TOol}"))],
+	...['page', 'spread', 'grid', 'signature', 'sheets', 'points', 'picas',]
+		.reduce((acc, item) => {
+			acc.total.push(item)
+			acc.slides.push([display.cd(
+				['div',
+				 ...acc.total.map(e =>
+					 ['p.mono', light('function '), e,light("() {...}")])]
+			)])
+			console.log(acc)
+			return acc
+		}, {
+			total: [],
+			slides:[],
+		}).slides,
+
+	[display.clear, focus_coding],
+	[display.cc(h1("First intentions")),
+	 // TODO: add indesign video display.cd(video("First intentions"))
+	],
+
+
+]
+
 
 let slides = [
 	[],
 
 	...intro,
-	[display.clear],
-	[display.dd(h3("But I'm still going to show you the tool :)"))],
+	...demo,
+	...introthesecond,
 
+	[display.clear],
 	[focus_coding, display.clear],
 
 	// First box
-	[display.cc(h3("Comes in many shapes and forms"))],
-
-	[display.cc(h3("Is a wrapper over p5.js"))],
-
-	[focus_design, display.dc(h4("p5.js + typographic vocabulary"))],
-
-	[
-		focus_coding,
-		display.cc(h3("p5.js wrapper -- for books" )),
-		display.dc(h2("Type")),
-	],
-	[
-		display.cc(h3("And the data structure lives as nested Arrays")),
-		display.cd(img('./images/nested_array.png'))
-	],
-
-	[
-		display.cc(h3("You can put words on page")),
-		display.cd(video('./images/words_on_page.mp4'))
-	],
-	[
-		display.cc(h3("and more words")),
-		display.cd(video('./images/more_words_on_page.mp4'))
-	],
-	[
-		display.cc(h3("you can put images")),
-		display.cd(video('./images/images_on_page.mp4'))
-	],
-	[
-		display.cc(h3("shapes")),
-		display.cd(video('./images/shapes.mp4'))
-	],
-	[
-		display.cc(h3("and more shapes")),
-		display.cd(video('./images/more_shapes.mp4'))
-	],
-
-	[
-		display.cc(h3("and moreeeeee")),
-		display.cd(video('./images/more_more_shapes.mp4'))
-	],
-	[
-		display.cc(h3("change sheet sizes"))
-	],
-	[
-		display.cc(h3("and sheet colors"))
-	],
-	[display.cc(h3("offset the sheets--"))],
-	[display.cc(h3("vertically"))],
-	[display.cc(h3("or horizontally"))],
-	[display.cc(h3("see how this would look"))],
-	[display.cc(h3("and with multiples"))],
-	[display.cc(h3("and export as imposed print files"))],
-	[
-		focus_design,
-		display.dc(h2("which can then be printed"))
-	],
-
-	[
-		focus_design,
-		display.dc(h2("and bound"))
-	],
-
-	[normal_layout, display.clear],
-
 	[display.cc(h2("Let's break this down"))],
-	[display.dc(h2("Words")),],
+	[display.dc(h2("Words"))],
 	...['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',]
 		.reduce((acc, item) => {
 			acc.total.push(item)
@@ -301,84 +300,6 @@ let slides = [
 		}).slides,
 
 	[display.dc(h2("Constitute a book"))],
-
-	[focus_coding],
-	[display.cc(h2("Syntax")),
-		display.cd(img('./images/words.png'))],
-	[display.cc(h2("Map Relationships"))],
-
-	[display.clear],
-	[display.cc(h2("So what goes into making this tool?"))],
-	[display.cd(['p', "The first thing that comes to mind when you think of a software that can make books, is...."])],
-
-	[display.cd(h2("WORDS!"))],
-	[
-		display.cc(h2("Typesetting")),
-		display.cd(h2("so we start with displaying words"))
-	],
-
-	[display.cd(h2("xxx Explains with images xxx"))],
-
-	[
-		display.clear,
-		display.cc(h2("So what's next?"))],
-
-	[
-		display.cd(h2("I have this white box that can draw words"))
-	],
-
-	[display.cd(h3("But it's not a sheet of paper yet?"))],
-	[
-		display.cc(h2("Units")),
-		display.cd(h3("units so the canvas can correspond to the printed page"))
-	],
-
-	[
-		display.cc(h2("Grid + (recto & verso)")),
-		display.cd(h3("Differentiate right and left page"))
-	],
-
-	[
-		display.cd(h3("Left and right page together make a spread")),
-		(
-			glossary.push(
-				["p", "spread: the surface made up of two pages in an open book."]),
-			display.dd(glossary)
-		)
-	],
-
-	[
-		display.cd(h3("left is verso, right is recto"))
-		(
-			glossary.push(["p", "recto: right page."]),
-			glossary.push(["p", "verso: left page."]),
-			display.dd(glossary)
-		)
-	],
-	[display.cd(h3("Just like introducing units turned canvas into a page"))],
-	[display.cd(h3("Introducing grid in our vocabulary makes this surface legible as a spread"))],
-
-	[display.cc(h2("Sequences"))],
-	[display.cd(h3("We've been just working with single spreads"))],
-	[display.cd(h3("But a book has multiple pages"))],
-
-	[display.cd(h3("new Book([spreads])"))],
-	[display.cd(h3("Book.page = 2"))],
-	[display.cd(h3("Book.draw()"))],
-
-	[display.cc(h2("Imposition"))],
-	[display.cd(h4("If you take a close look at a book, you'll see that the spreads aren't really on the same sheet. They get split up into different sheets"))],
-	[display.cd(h4("Explains imposition with diagrams, images and videos"))],
-
-	[focus_design],
-	[display.dc(h4("How book gets bound"))],
-	[display.dd(h4("Explains imposition with diagrams, images and videos"))],
-
-	[focus_coding],
-	[display.cc(h2("Affordances"))],
-	[display.cd(h2("So at this point I started thinking how can I utilize the affordances that come with "))],
-	
-
 ]
 
 
@@ -397,4 +318,4 @@ let gotoslide = e => {
 
 document.body.appendChild(dom(root))
 
-gotoslide(66)
+gotoslide(38)

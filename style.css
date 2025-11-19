@@ -15,8 +15,13 @@
   --pr: #000000;
   --hi: #F1DDF1;
   --hig: #E2E9C1;
-  --mut: #a0a0a07d;
+  --mut: #a0a0a0aa;
 }
+
+.mono {
+	font-family: 'hermit';
+}
+
 body {
 	font-family: 'OPS Favorite';
 	font-family: 'Gap Sans';
@@ -40,6 +45,10 @@ h3 {
 
 h4 {
 	font-size: 1.8em;
+}
+
+.light {
+	color: var(--mut);
 }
 
 p {
@@ -104,9 +113,8 @@ p {
 	height: 8vh;
 	bottom: 1vh;
 	left: 1vw;
-	/* display: grid; */
-	/* grid-template-columns: 1fr 1fr; */
-	/* padding: 1em; */
+	display: grid;
+  grid-template-columns: repeat(4, 100px);
 	font-size: 1em;
 	text-transform: uppercase;
 	font-weight: 600;
