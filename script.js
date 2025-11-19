@@ -231,6 +231,15 @@ let demo = [
 	[display.cd(h1("*Clips of the tool*"))],
 ]
 
+let build = (items, fn /*(total)*/) => items.reduce((acc, item) => {
+			acc.total.push(item)
+			acc.slides.push(fn(acc.total))
+			return acc
+		}, {
+			total: [],
+			slides:[],
+		}).slides
+
 let introthesecond = [
 
 	[display.cd(h1("A shared"))],
@@ -239,32 +248,14 @@ let introthesecond = [
 
 	[display.clear, focus_coding],
 	[display.dc(h2("Words"))],
-	...['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',]
-		.reduce((acc, item) => {
-			acc.total.push(item)
-			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
-			return acc
-		}, {
-			total: [],
-			slides:[],
-		}).slides,
+	...build(['Page', 'Spread', 'Grid', 'Signature', 'Sheets', 'Points', 'Picas',],
+					 (total) => [display.dd(['div', ...total.map(e => ['p', e])])]),
 
 
 	[display.cc(h2("Programming as -> {TOol}"))],
-	...['page', 'spread', 'grid', 'signature', 'sheets', 'points', 'picas',]
-		.reduce((acc, item) => {
-			acc.total.push(item)
-			acc.slides.push([display.cd(
-				['div',
-				 ...acc.total.map(e =>
-					 ['p.mono', light('function '), e,light("() {...}")])]
-			)])
-			console.log(acc)
-			return acc
-		}, {
-			total: [],
-			slides:[],
-		}).slides,
+
+	...build(['page', 'spread', 'grid', 'signature', 'sheets', 'points', 'picas',], (total) =>
+		[display.cd(['div', ...total.map(e => ['p.mono', light('function '), e,light("() {...}")])])]),
 
 	[display.clear, focus_coding],
 	[display.cc(h1("First intentions")),
@@ -274,15 +265,8 @@ let introthesecond = [
 	[display.clear, focus_design],
 	[display.dc(h1("words..."))],
 
-	...['Page', 'Spread', 'Recto', 'Verso', 'Grid', 'Signature', 'Sheets']
-		.reduce((acc, item) => {
-			acc.total.push(item)
-			acc.slides.push([display.dd(['div', ...acc.total.map(e => ['p', e])])])
-			return acc
-		}, {
-			total: [],
-			slides:[],
-		}).slides,
+	...build(['Page', 'Spread', 'Recto', 'Verso', 'Grid', 'Signature', 'Sheets'], 
+					 total => [display.dd(['div', ...total.map(e => ['p', e])])]),
 
 	[display.dc(h4("bits and pieces that"))],
 	[display.dc(h2("constitute a BOOK"))],
@@ -290,34 +274,21 @@ let introthesecond = [
 	[focus_coding],
 	[display.cc(h1("OK"))],
 	[display.cc(h1("Syntax"))],
-	[display.cd(
-		h1("Afforded to me by javascript")
-		// add image of function, classes, objects, arrays, loops
-	)],
 
-	[display.cd(
-		['div',
+	...build([
 			h4("Afforded to me by javascript"),
-			h4("and p5.js")
-			// text(), line(), createCanvas() 
-		]
-	)],
+			h4(light('functions, objects, arrays and loops')),
+			h4("and p5.js"),
+			h4(['span.mono.light', 'text(), line(), rect(), textSize(), ...'])],
+					 total => [display.cd(['div', ...total])]),
 
-	[display.cd(
-		['div',
-			h4("Break down this vocabulary"),
-		]
-	)],
-
-	[display.cd(
-		['div',
+	...build([
 			h4("Break down this vocabulary"),
 			h4("|"),
 			h4("|"),
 			h4("v"),
-			h4("how to constitute in a programming context"),
-		]
-	)],
+			h2("how to constitute in a programming context")],
+					 total => [display.cd(['div', ...total])]),
 ]
 
 
@@ -393,3 +364,5 @@ let gotoslide = e => {
 document.body.appendChild(dom(root))
 
 gotoslide(57)
+
+
