@@ -551,6 +551,11 @@ let slides = [
 document.onkeydown = e => {
 	if (e.key == 'ArrowLeft') prevslide()
 	if (e.key == 'ArrowRight') nextslide()
+
+	if (e.key == 'w') {
+		if (e.repeat) { return }
+		document.body.appendChild(dom('img.meme.validation', {src: './images/validation.png'}))
+	}
 	if (e.key == 'd') {
 		if (e.repeat) { return }
 		document.body.appendChild(dom('.big.right-arrow', '☞'))
@@ -568,6 +573,7 @@ document.onkeydown = e => {
 }
 
 document.onkeyup = e => {
+	if (e.key == 'w') {document.querySelectorAll('.validation').forEach(e => e.remove())}
 	if (e.key == 'd') {document.querySelectorAll('.right-arrow').forEach(e => e.remove())}
 	if (e.key == 's' )
 	{document.querySelectorAll('.center-arrow').forEach(e => e.remove())}

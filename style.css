@@ -39,6 +39,14 @@
 	font-family: 'OPS Favorite';
 }
 
+.validation {
+	width: 20vw;
+	position: fixed;
+	left: 35vw;
+	top: 20vh;
+	z-index: 50;
+}
+
 body {
 	font-family: 'OPS Favorite';
 	font-family: 'Gap Sans';
@@ -126,12 +134,10 @@ p {
 
 
 .controller {
-	width: 20vw;
+	width: 40vw;
 	height: 8vh;
-	bottom: 1vh;
+	bottom: 2vh;
 	left: 1vw;
-	display: grid;
-  grid-template-columns: repeat(4, 100px);
 	font-size: 1em;
 	text-transform: uppercase;
 	font-weight: 600;
