@@ -1,6 +1,10 @@
 import { reactive, memo } from './hok.js'
 import { dom } from './dom.js'
 
+console.log("Timer starts and restarts whenever slide number is 0")
+console.log("Arrow key Left and Right will do stuff")
+console.log("Also WASD will do stuff")
+
 let globalhistory = () => {
 	let undo = []
 	let undobuffer = []
@@ -17,7 +21,9 @@ let globalhistory = () => {
 		undo.push(un)
 	}
 
-	let raffer = () => {
+	// need to use a raf so multiple function calls get
+	// counted as one undo/redo
+	let RAF = () => {
 		if (undobuffer.length == 1) undo.push(undobuffer.pop())
 		else if (undobuffer.length > 1) {
 			let undos = undobuffer.reduce((acc, e) => (acc.push(e), acc), [])
@@ -30,10 +36,10 @@ let globalhistory = () => {
 			undo.push(group_dos(undos))
 			undobuffer = []
 		}
-		requestAnimationFrame(raffer)
+		requestAnimationFrame(RAF)
 	}
 
-	requestAnimationFrame(raffer)
+	requestAnimationFrame(RAF)
 
 	return {
 		canUndo: () => (undo.length > 0),
@@ -181,6 +187,20 @@ let imgfj = t => ['img', {src:"./images/" +t+".jpeg"}]
 let giff = t => ['img', {src:"./images/" +t+".gif"}]
 let light = t => ['span.light', t]
 
+
+let build = (items, fn) => items.reduce((acc, item) => {
+	acc.total.push(item)
+	acc.slides.push(fn(acc.total))
+	return acc
+}, {
+	total: [],
+	slides:[],
+}).slides
+
+// ---------------------
+// SLIDES
+// ---------------------
+
 let intro = [
 	[display.cd(flash("HELLO WORLD"))],
 	[display.cd(flash("aaryan"))],
@@ -229,15 +249,6 @@ let intro = [
 			"to shape page layouts and design books"]
 		])],
 ]
-
-let build = (items, fn /*(total)*/) => items.reduce((acc, item) => {
-			acc.total.push(item)
-			acc.slides.push(fn(acc.total))
-			return acc
-		}, {
-			total: [],
-			slides:[],
-		}).slides
 
 let demo = [
 	[display.clear, focus_coding],
